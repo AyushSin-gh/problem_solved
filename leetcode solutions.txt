@@ -1,0 +1,340 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+     ListNode* dummy=new ListNode(-1);
+     ListNode* p1=list1;
+     ListNode* p2=list2;
+     ListNode* p3=dummy;
+     while(p1!=NULL && p2!=NULL) {
+         if(p1->val > p2->val){
+             p3->next=p2;
+              p2=p2->next;
+         p3=p3->next;
+         }
+         else{
+             p3->next= p1;
+              p1=p1->next;
+                p3=p3->next;
+         }
+     }
+     while(p1!=NULL){
+         p3->next=p1;
+         p1=p1->next;
+         p3=p3->next;
+     }
+     while(p2!=NULL){
+         p3->next=p2;
+         p2=p2->next;
+         p3=p3->next;
+     }
+
+     return dummy->next;
+    }
+};
+
+
+********* mergesort using  linked list 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        int sz=nums.size();
+        vector<int>ans;
+        for(int i=0;i<sz;i++){
+            ans.push_back(nums[i]);
+              for(int j=i+1;j<sz;j++){
+                 if(ans[i]==nums[j]){
+                     return ans[i];
+                 }
+              }
+        }
+
+        return 0;
+    }
+};
+
+
+
+******   duplicate element but time complexicity ic n^2
+
+********  for solving within time bound use hasfunctions 
+
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        int sz=nums.size();
+        vector<int>ans;
+
+      unordered_map<int,int>mymap;
+      for(int i=0;i<sz;i++){
+          if(mymap.count(nums[i])==0){
+              mymap[nums[i]]=1;
+          }
+          else{
+              ans.push_back(nums[i]);
+          }
+      }
+   return ans[0];
+        return 0;
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+****    sum 
+1. using 3 nested for loop which will return t.c of n^3  (brute force technique)
+2. using a fixed value then using 2 pointer to iterarte over full array ( t.c n^2 )
+
+
+
+  brute force :
+for i = 0 to n-1 :
+   for j =i+1 to n-1 :
+      for k=j+1 to n-1 :
+   if all addation equal required condition 
+  return ans ;
+
+
+
+good  apporach :
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+** valid parthness using stack :
+
+( stack operation is used 
+
+
+class Solution {
+public:
+    bool isValid(string s) {
+         stack <int> my;
+   for(int i=0;i<s.size();i++){
+       if(s[i]=='(' || s[i]=='[' || s[i]=='{'){
+          my.push(s[i]);
+       }
+
+       else{
+           if(s.empty()){
+               return false;
+           }
+           else if (s[i] == ')' &&  my.top()=='('){
+               my.pop();
+               return true;
+           }
+            else if (s[i] == ']' &&  my.top()=='['){
+               my.pop();
+               return true;
+           }
+            else if (s[i] == '}' &&  my.top()=='{'){
+               my.pop();
+               return true;
+           }
+           else {
+               return false;
+           }
+       }
+   }
+   if(my.empty()){
+       return true;
+   }
+   else{
+       return false;
+   }
+    }
+};
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  **********removing duplicate element from list 
+
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        ListNode* p1=head;
+        while(p1!= NULL && p1->next != NULL){
+            if(p1-> val == p1->next->val){
+               ListNode* temp=p1->next;
+               p1->next=p1->next->next;
+               delete temp;
+            }
+            else {
+                p1=p1->next;
+            }
+        }
+
+        return head;
+    }
+};
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+************  finding index in string solution **********************************************************
+
+
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        if(needle.size()>haystack.size()){
+            return -1;
+        }
+       
+        else{
+            int j=0;
+            for(int i=0;i<haystack.size()-needle.size()+1;i++){
+                if( haystack[i] == needle [j]){
+                    int k=i;
+                    while( j<needle.size() && haystack[k] == needle [j] ){
+                        j++;
+                        k++;
+                    }
+                    if(j == needle.size()){
+                        return i; 
+                    }
+                }
+                j=0;
+            }
+            return -1;
+        }
+    }
+};
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+****** valid palindrome second (my solution 3 testcases ot solvable)
+
+
+class Solution {
+public:
+    bool validPalindrome(string s) {
+        int length=s.size();
+        int count=0;
+        int done=0;
+        int neg_count=0;
+        if(length ==1 || length ==2){
+            return true;
+        }
+        else{
+          for(int i=0,j=length-1;i<j;i++,j--){
+              
+              if(s[i]==s[j]){
+                count++;
+              }
+             else{
+                if(s[i]==s[j-1]){
+                    j=j-1;
+                } 
+                else if( s[i+1]== s[j]){
+                    i=i+1;
+                }
+              else{
+                  neg_count+=1;
+              }
+               neg_count +=1;
+             }
+          }
+        
+          if(count >0 && neg_count <=1){
+             return true;
+          }
+            else{
+            return false;
+             }
+          }
+    }
+    
+};
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+climbing stairs solution  : 
+
+class Solution {
+public:
+    int climbStairs(int n) {
+      if (n==1){
+        return 1;
+      }
+      int arr[n+1];
+      arr[1]=1;
+      arr[2]=2;
+      for(int i=3;i<=n;i++){
+        arr[i]=arr[i-1]+arr[i-2];
+      }
+
+      return arr[n];
+    }
+};
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+buying and selling stocks medium :
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int res=0;
+        if(prices.size()==0 || prices.size()==1){
+            return 0;
+        }
+        else{
+        for(int i=0;i<prices.size()-1;i++){
+            if(prices[i]<prices[i+1]){
+               res=res+(prices[i+1]  - prices[i]);
+            }
+        }
+
+        return res;
+        }
+    }
+};
