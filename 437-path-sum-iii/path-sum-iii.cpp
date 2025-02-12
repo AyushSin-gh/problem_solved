@@ -10,31 +10,37 @@
  * };
  */
 class Solution {
-private:
-    void findpath(TreeNode* root, int targetSum, long long sum, int &count) {
-        if (root == nullptr) return;
-        
-        sum += root->val;
-        
-        if (sum == targetSum) count++;
-        
-        findpath(root->left, targetSum, sum, count);
-        findpath(root->right, targetSum, sum, count);
-    }
-
 public:
-    int pathSum(TreeNode* root, int targetSum) {
-        if (root == nullptr) return 0;
+
+    void check(TreeNode* root, int tsum , long long sum ,int &count){
+        if(root == NULL){
+            return ;
+        }
+         
+
+        sum+=root->val;
+        if(sum == tsum){
+            count+=1;
+        }
+       
+
+
+        check(root->left , tsum , sum , count );
+        check(root->right , tsum , sum , count ); 
         
-        int count = 0;
-        
-        // Start a new path from the current node
-        findpath(root, targetSum, 0, count);
-        
-        // Recursively check for paths starting from left and right subtrees
-        count += pathSum(root->left, targetSum);
-        count += pathSum(root->right, targetSum);
-        
+    }
+int pathSum(TreeNode* root, int targetSum) {
+        if(root == NULL){
+            return 0;
+        }
+
+        int count=0;
+
+        check(root , targetSum , 0 , count );
+
+        count+= pathSum(root->left , targetSum  );
+        count+= pathSum(root->right , targetSum ) ;
+
         return count;
     }
 };
