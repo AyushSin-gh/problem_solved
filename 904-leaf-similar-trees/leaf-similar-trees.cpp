@@ -10,24 +10,26 @@
  * };
  */
 class Solution {
-private:
- void check(TreeNode* root , vector<int>& leave){
-    if(root==NULL){
-        return;
-    }
-    if(root->left == NULL && root ->right == NULL){
-        leave.push_back(root->val);
-    }
-    check(root->left,leave);
-    check(root->right,leave);
- }
 public:
-    bool leafSimilar(TreeNode* root1, TreeNode* root2) {
-        vector<int>leave1;
-        vector<int>leave2;
-       check(root1,leave1);
-       check(root2,leave2);
+  void check(TreeNode* root  ,  vector<int> &ans){
+    if(root == NULL){
+        return ;
+    }
 
-       return leave1 == leave2;
+    if(root->left == NULL && root->right == NULL){
+        ans.push_back(root->val);
+    }
+
+    check(root->left , ans);
+    check(root->right , ans);
+  }
+    bool leafSimilar(TreeNode* root1, TreeNode* root2) {
+        vector<int> ans1;
+        vector<int> ans2;
+
+        check(root1 , ans1);
+        check(root2 , ans2);
+
+        return ans1 == ans2;
     }
 };
